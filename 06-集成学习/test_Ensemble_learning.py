@@ -1,4 +1,5 @@
-# 使用随机森林
+"""
+# 1.使用随机森林预测泰坦尼克号生存率
 import warnings
 import pandas as pd
 data=pd.read_csv('./titanic/train.csv')
@@ -36,3 +37,16 @@ from sklearn.model_selection import GridSearchCV
 gc=GridSearchCV(rfc,param_grid=param,cv=2)
 gc.fit(x_train,y_train)
 print("使用超参数选择后，随机森林预测的准确率为",gc.score(x_test,y_test))
+# ===========================================================================
+"""
+# 2.使用 Adaboost 预测葡萄酒品质
+import pandas as pd
+data = pd.read_csv("./wine0501.csv")
+# print(data.info())
+data=data[data['Class label']!=1] # 选取class label!=1的行
+x=data[['Alcohol','Hue']].copy()
+y=data['Class label'].copy()
+# print(y.head(100))
+
+from sklearn.preprocessing import LabelEncoder
+pre = LabelEncoder()
