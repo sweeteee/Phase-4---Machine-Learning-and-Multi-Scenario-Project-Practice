@@ -29,3 +29,10 @@ print('dtc_accuracy:',dtc.score(x_test,y_test))
 print('dtc_report:\n',classification_report(y_true=y_test,y_pred=dtc_y_pre))
 print('rfc_accuracy:',rfc.score(x_test,y_test))
 print('rfc_report:\n',classification_report(y_true=y_test,y_pred=rfc_y_pre))
+
+# 超参数选择
+param={"n_estimators":[80,100,200],"max_depth":[2,4,6,8,10,12],"random_state":[9]}
+from sklearn.model_selection import GridSearchCV
+gc=GridSearchCV(rfc,param_grid=param,cv=2)
+gc.fit(x_train,y_train)
+print("使用超参数选择后，随机森林预测的准确率为",gc.score(x_test,y_test))
