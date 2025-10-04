@@ -162,6 +162,8 @@ x=data.iloc[:,:-1]
 y=data.iloc[:,-1]-3
 from sklearn.model_selection import train_test_split
 x_train,x_test,y_train,y_test=train_test_split(x,y,stratify=y,test_size=0.2)
+# stratify=y 表示分层抽样：
+# 保证每个品质类别在训练集和测试集中都有相同比例的数据，避免样本不均衡导致某些类别太少。
 from sklearn.utils import class_weight
 class_weight=class_weight.compute_sample_weight(class_weight='balanced',y=y_train)
 from xgboost import XGBClassifier
