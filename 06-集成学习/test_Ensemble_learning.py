@@ -166,9 +166,15 @@ x_train,x_test,y_train,y_test=train_test_split(x,y,stratify=y,test_size=0.2)
 # 保证每个品质类别在训练集和测试集中都有相同比例的数据，避免样本不均衡导致某些类别太少。
 from sklearn.utils import class_weight
 class_weight=class_weight.compute_sample_weight(class_weight='balanced',y=y_train)
+# compute_sample_weight() 会根据类别出现的次数计算每个样本的“权重”。
+# class_weight='balanced' 让模型在训练时更关注少数类别，防止出现“模型只会预测多数类”的问题。
 from xgboost import XGBClassifier
 model=XGBClassifier(n_estimators=5,objective='multi:softmax')
+# XGBClassifier 是一个基于梯度提升（Gradient Boosting）的强大分类算法。
+# n_estimators=5：只训练 5 棵树（树越多越准确，但计算慢，这里只是小规模示范）。
+# objective='multi:softmax'：多分类任务，输出为整数类别（非概率）。
 model.fit(x_train,y_train,sample_weight=class_weight)
+# sample_weight：每个样本的权重，前面计算得到，用于平衡类别。
 y_pre=model.predict(x_test)
 from sklearn.metrics import classification_report
 print(classification_report(y_test,y_pre))
