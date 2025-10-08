@@ -162,14 +162,34 @@ x=x.toarray()
 #  [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0
 #   0]]
 # print(len(x)) # 13
+# print(len(x[0])) # 37
+
+# 划分测试集数据集
 x_train=x[:10,:]
 # print(len(x_train)) # 10
-# print(x_train)
+# print(y)
+# 0     1
+# 1     1
+# 2     1
+# 3     1
+# 4     0
+# 5     0
+# 6     0
+# 7     0
+# 8     0
+# 9     1
+# 10    0
+# 11    0
+# 12    0
+# Name: labels, dtype: int64
+# print(type(y)) # <class 'pandas.core.series.Series'>
 y_train=y.values[0:10]
+# print(y_train) # [1 1 1 1 0 0 0 0 0 1]
+# print(type(y)) # <class 'pandas.core.series.Series'>
 x_test=x[10:,:]
 y_test=y.values[10:]
-# print(x_train.shape)
-# print(y_train.shape)
+# print(x_train.shape) # (10, 37)
+# print(y_train.shape) # (10,)
 
 # 模型训练
 from sklearn.naive_bayes import MultinomialNB
@@ -190,4 +210,4 @@ y_predict=model.predict(x_test)
 # x_test：测试集特征矩阵
 # predict() 会输出预测标签（1好评 或 0差评）
 print(y_predict)
-print(model.score(x_test,y_test))
+print("%.3f" % model.score(x_test,y_test)) # 1.000表示预测完全正确
