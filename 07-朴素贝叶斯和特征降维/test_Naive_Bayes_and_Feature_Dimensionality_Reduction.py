@@ -1,3 +1,5 @@
+'''
+# 1.朴素贝叶斯----书籍评价预测
 import pandas as pd
 import numpy as np
 data=pd.read_csv("./书籍评价.csv",encoding='gbk')
@@ -211,3 +213,52 @@ y_predict=model.predict(x_test)
 # predict() 会输出预测标签（1好评 或 0差评）
 print(y_predict)
 print("%.3f" % model.score(x_test,y_test)) # 1.000表示预测完全正确
+
+# ==========================================================================================
+'''
+
+'''
+# 2.特征降维----低方差过滤法
+import pandas as pd
+data=pd.read_csv("垃圾邮件分类数据.csv")
+# print(data.shape) #(971, 25734)
+from sklearn.feature_selection import VarianceThreshold
+transform=VarianceThreshold(threshold=0.1)
+x=transform.fit_transform(data)
+# print(x.shape) #(971, 1044) 降维到原来的20分之1
+# ======================================================
+'''
+
+'''
+# 3.主成分分析
+from sklearn.datasets import load_iris
+x,y=load_iris(return_X_y=True)# 导入鸢尾花数据集
+# print(x)
+# print(x.shape) # (150, 4)
+from sklearn.decomposition import PCA
+# Principal component analysis
+pca1=PCA(n_components=0.95) # 这句什么意思?
+x1=pca1.fit_transform(x)
+# print(x1)
+# print(x1.shape) # (150, 2)
+pca1=PCA(n_components=3) # 保留三个特征
+x2=pca1.fit_transform(x)
+# print(x2)
+# print(x2.shape) # (150, 3)
+# ======================================================
+'''
+
+'''
+# 4.计算相关系数
+from sklearn.datasets import load_iris
+x,y=load_iris(return_X_y=True)
+x1=x[:,2] # 选取第3列
+x2=x[:,1] # 选取第2列
+# print(x1.shape) # (150,)
+# print(x2.shape) # (150,)
+from scipy.stats import pearsonr,spearmanr
+corr=pearsonr(x1,x2)
+print('皮尔逊相关系数：',corr[0],'这两个特征的不相关性概率',corr[1])
+corr=spearmanr(x1,x2)
+print('斯皮尔曼相关系数：',corr[0],'这两个特征的不相关性概率',corr[1])
+'''
